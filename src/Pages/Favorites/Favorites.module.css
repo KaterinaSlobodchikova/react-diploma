@@ -1,0 +1,22 @@
+.favoritesContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 77px;
+}
+
+.favoritesWrapper {
+  width: 1120px;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, sans-serif;
+}
+
+.secondTitleContainer {
+  display: flex;
+}
+
+.arrowRightWrapper {
+  transform: rotate(180deg);
+}

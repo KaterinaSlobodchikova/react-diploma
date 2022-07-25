@@ -1,0 +1,73 @@
+.bookPageContainer {
+  width: 1120px;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, sans-serif;
+  margin-top: 77px;
+}
+
+.bookInfoContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookBackground {
+  display: flex;
+  width: 544px;
+  height: 472px;
+  background: #fee9e2;
+  justify-content: center;
+}
+
+.IconsWrapper {
+  display: flex;
+  gap: 25px;
+}
+
+.detailsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titlesWrapper {
+  display: flex;
+  gap: 120px;
+}
+
+.descWrapper {
+  padding: 50px 0;
+}
+
+.oneTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dividerLine {
+  width: 161px;
+  height: 2px;
+  background: #313037;
+}
+
+.priceWrapper {
+  font-weight: 700;
+  font-size: 40px;
+}
+
+.buttonWrapper {
+  margin: 25px 0;
+}
+
+.dividerLineSmall {
+  width: 448px;
+  height: 1px;
+  background: #e7e7e7;
+  margin-bottom: 25px;
+}
+
+.textWrapper {
+  font-size: 16px;
+  color: #a8a8a8;
+}

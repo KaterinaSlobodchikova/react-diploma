@@ -1,0 +1,29 @@
+.bookCardContainer {
+  display: flex;
+  width: 352px;
+}
+
+.text {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.priceRateWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookCardBackground {
+  display: flex;
+  width: 352px;
+  height: 364px;
+  background: #fee9e2;
+  margin-bottom: 21px;
+  justify-content: center;
+}
