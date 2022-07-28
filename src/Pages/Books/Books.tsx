@@ -11,7 +11,6 @@ import BookCard from "./Components/BookCard";
 
 const Books: FC = () => {
   const booksList = useSelector(BooksSelectors.getBooks);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,8 +22,6 @@ const Books: FC = () => {
       <BookCard key={book.isbn13} book={book} />
     ));
   }, [booksList]);
-
-  console.log("booksList", booksList);
 
   return (
     <div className={classNames(styles.booksContainer)}>

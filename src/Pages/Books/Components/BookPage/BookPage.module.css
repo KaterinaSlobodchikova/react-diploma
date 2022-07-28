@@ -16,7 +16,7 @@
   width: 544px;
   height: 472px;
   background: #fee9e2;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .IconsWrapper {
@@ -70,4 +70,26 @@
 .textWrapper {
   font-size: 16px;
   color: #a8a8a8;
+}
+
+.authorWrapper {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.secondTitleContainer,
+.popularBooksContainer {
+  width: 1120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrowsWrapper {
+  display: flex;
+}
+
+h2 {
+  margin-bottom: 50px;
 }

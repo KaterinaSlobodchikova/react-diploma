@@ -1,18 +1,23 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./BookPage.module.css";
 import {
   BooksSelectors,
+  getBooks,
+  setFavBooks,
   setSelectedBook,
 } from "../../../../Redux/reducers/books";
 import Title from "../../../../Components/Title";
 import Subscribe from "../../../../Components/Subscribe";
 import {
   FBIcon,
+  Heart,
   IconArrowLeft,
+  IconArrowRightSmall,
+  IconArrowSmall,
   MoreIcon,
   RatingIcon,
   TwitterIcon,
@@ -20,15 +25,37 @@ import {
 import Button from "../../../../Components/Button";
 import IconButton from "../../../../Components/IconButton";
 import Divider from "../../../../Components/Divider";
+import { addToCart } from "../../../../Redux/reducers/cart";
+import { BookModel } from "../../../../Types/models/book.model";
+import BookCard from "../BookCard";
 
 const BookPage: FC = () => {
   const dispatch = useDispatch();
   const book = useSelector(BooksSelectors.getSelectedBook);
+  const booksList = useSelector(BooksSelectors.getBooks);
   const { bookId } = useParams<{ bookId: string }>();
 
   useEffect(() => {
     dispatch(setSelectedBook(bookId));
   }, []);
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, []);
+
+  const addToCartHandler = (book: BookModel) => {
+    dispatch(addToCart(book));
+  };
+
+  const addToFavHandler = (book: BookModel) => {
+    dispatch(setFavBooks(book));
+  };
+
+  const similarBooksElements = useMemo(() => {
+    return booksList
+      ?.slice(5, 8)
+      .map((book: BookModel) => <BookCard key={book.isbn13} book={book} />);
+  }, [booksList]);
 
   return (
     <div className={classNames(styles.bookPageContainer)}>
@@ -38,6 +65,14 @@ const BookPage: FC = () => {
         <div className={classNames(styles.bookImageContainer)}>
           <div className={classNames(styles.bookBackground)}>
             <img src={book?.image} alt="book-preview" />
+            <div>
+              <IconButton
+                icon={Heart}
+                onClick={() => {
+                  addToFavHandler(book!);
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={classNames(styles.bookInfoWrapper)}>
@@ -51,7 +86,9 @@ const BookPage: FC = () => {
 
           <div className={classNames(styles.detailsWrapper)}>
             <p className={classNames(styles.textWrapper)}>Authors</p>
-            <div>{book?.authors}</div>
+            <div className={classNames(styles.authorWrapper)}>
+              {book?.authors}
+            </div>
           </div>
 
           <div className={classNames(styles.detailsWrapper)}>
@@ -71,7 +108,7 @@ const BookPage: FC = () => {
           <p>More details...</p>
           <Button
             title="ADD TO CART"
-            onClick={() => {}}
+            onClick={() => addToCartHandler(book!)}
             className={classNames(styles.buttonWrapper)}
           />
           <p>Preview book</p>
@@ -100,8 +137,16 @@ const BookPage: FC = () => {
 
       <Subscribe />
 
-      <h2>SIMILAR BOOKS</h2>
-      <div>SIMILAR BOOKS</div>
+      <div className={classNames(styles.secondTitleContainer)}>
+        <h2>SIMILAR BOOKS</h2>
+        <div className={classNames(styles.arrowsWrapper)}>
+          <IconButton icon={IconArrowSmall} onClick={() => {}} />
+          <IconButton icon={IconArrowRightSmall} onClick={() => {}} />
+        </div>
+      </div>
+      <div className={classNames(styles.popularBooksContainer)}>
+        {similarBooksElements}
+      </div>
     </div>
   );
 };

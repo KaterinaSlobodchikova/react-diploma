@@ -1,5 +1,6 @@
-import { BookModel } from "./../../../Types/models/book.model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { BookModel } from "./../../../Types/models/book.model";
 import { RootState } from "../../store";
 
 type InitialStateType = {
@@ -7,13 +8,15 @@ type InitialStateType = {
   selectedBook: BookModel | null;
   isBooksLoading: boolean;
   selectedBookLoading: boolean;
-};
+  favBooksList: any[];
+}; 
 
 const initialState: InitialStateType = {
   booksList: [],
   selectedBook: null,
   isBooksLoading: false,
   selectedBookLoading: false,
+  favBooksList: [],
 };
 
 const booksSlice = createSlice({
@@ -33,6 +36,9 @@ const booksSlice = createSlice({
     setSelectedBookLoading: (state: any, action: any) => {
       state.isSelectedBookLoading = action.payload;
     },
+    setFavBooks: (state: any, action: any) => {
+      state.favBooksList.push(action.payload);
+    },
   },
 });
 
@@ -42,6 +48,7 @@ export const {
   setBooks,
   setSelectedBook,
   setSelectedBookLoading,
+  setFavBooks,
 } = booksSlice.actions;
 
 const reducer = booksSlice.reducer;
@@ -54,4 +61,5 @@ export const BooksSelectors = {
   getAllBooks: (state: RootState) => state.books.booksList,
   getSelectedBook: (state: RootState) => state.books.selectedBook,
   getSelectedBookLoading: (state: RootState) => state.books.selectedBookLoading,
+  getFavBooks: (state: RootState) => state.books.favBooksList,
 };

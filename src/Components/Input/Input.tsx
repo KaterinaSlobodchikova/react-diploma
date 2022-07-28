@@ -8,9 +8,10 @@ type InputProps = {
   value?: string;
   onChange: any;
   placeholder?: string;
+  onKeyDown?: any;
 };
 
-const Input: FC<InputProps> = ({ type, value, onChange, placeholder }) => {
+const Input: FC<InputProps> = ({ type, value, onChange, placeholder, onKeyDown }) => {
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -21,6 +22,7 @@ const Input: FC<InputProps> = ({ type, value, onChange, placeholder }) => {
       onChange={onInputChange}
       className={classNames(styles.input)}
       placeholder={placeholder}
+      onKeyDown={onKeyDown}
     />
   );
 };

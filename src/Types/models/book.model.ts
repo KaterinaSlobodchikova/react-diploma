@@ -14,6 +14,7 @@ export type BookModel = {
   image: string;
   url: string;
   pdf: PdfModel;
+  favorite: boolean;
 };
 
 export type PdfModel = {

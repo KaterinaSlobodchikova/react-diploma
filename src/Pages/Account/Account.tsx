@@ -1,5 +1,6 @@
 import { FC } from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Account.module.css";
 import Title from "../../Components/Title";
@@ -10,10 +11,16 @@ import { IconArrowLeft } from "../../Assets";
 import Divider from "../../Components/Divider";
 
 const Account: FC = () => {
+  const navigate = useNavigate();
+
+  const onStepBackHandler = () => {
+    navigate(-1);
+  };
+
   return (
     <div className={classNames(styles.accountContainer)}>
       <div className={classNames(styles.accountWrapper)}>
-        <IconButton icon={IconArrowLeft} onClick={() => {}} />
+        <IconButton icon={IconArrowLeft} onClick={onStepBackHandler} />
         <Title text="ACCOUNT" />
         <h2>PROFILE</h2>
         <div className={classNames(styles.profileInfoWrapper)}>

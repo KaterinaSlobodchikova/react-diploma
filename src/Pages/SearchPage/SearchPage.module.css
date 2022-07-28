@@ -1,0 +1,30 @@
+.searchContainer {
+  width: 1120px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.searchWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1120px;
+  gap: 32px;
+}
+
+input {
+  height: 56px;
+  width: 452px;
+  border: 1px solid #e7e7e7;
+  padding-left: 24px;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.searchInputContainer {
+  display: flex;
+  justify-content: center;
+}

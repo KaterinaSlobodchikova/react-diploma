@@ -1,6 +1,6 @@
 .favoritesContainer {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   padding-top: 77px;
@@ -13,10 +13,37 @@
   font-family: Roboto, sans-serif;
 }
 
-.secondTitleContainer {
+.favBooksWrapper {
+  width: 1120px;
+  min-height: 80vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.dividerWrapper {
+  margin: 40px 0;
+}
+
+.noFavWrapper {
+  width: 1120px;
+  min-height: 50vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.secondTitleContainer,
+.popularBooksContainer {
+  width: 1120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrowsWrapper {
   display: flex;
 }
 
-.arrowRightWrapper {
+.iconWrapper {
   transform: rotate(180deg);
 }

@@ -1,6 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { all, takeLatest, put, call } from "redux-saga/effects";
-import { getAllBooksApi, getSelectedBookApi } from "../../api";
+import {
+  getAllBooksApi,
+  getSelectedBookApi,
+} from "../../api";
 import {
   getBooks,
   setBooks,
