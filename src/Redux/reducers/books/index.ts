@@ -9,7 +9,7 @@ type InitialStateType = {
   isBooksLoading: boolean;
   selectedBookLoading: boolean;
   favBooksList: any[];
-}; 
+};
 
 const initialState: InitialStateType = {
   booksList: [],
@@ -37,7 +37,22 @@ const booksSlice = createSlice({
       state.isSelectedBookLoading = action.payload;
     },
     setFavBooks: (state: any, action: any) => {
-      state.favBooksList.push(action.payload);
+      const existingBook = state.favBooksList.findIndex(
+        (book: BookModel) => book.isbn13 === action.payload.isbn13
+      );
+      if (existingBook >= 0) {
+        state.favBooksList[existingBook] = {
+          ...state.favBooksList[existingBook],
+        };
+      } else {
+        state.favBooksList.push(action.payload);
+      }
+    },
+    removeFromFavs: (state: any, action: any) => {
+      const index = state.favBooksList.findIndex(
+        (book: BookModel) => book.isbn13 === action.payload
+      );
+      state.favBooksList.splice(index, 1);
     },
   },
 });
@@ -49,6 +64,7 @@ export const {
   setSelectedBook,
   setSelectedBookLoading,
   setFavBooks,
+  removeFromFavs,
 } = booksSlice.actions;
 
 const reducer = booksSlice.reducer;
@@ -62,4 +78,5 @@ export const BooksSelectors = {
   getSelectedBook: (state: RootState) => state.books.selectedBook,
   getSelectedBookLoading: (state: RootState) => state.books.selectedBookLoading,
   getFavBooks: (state: RootState) => state.books.favBooksList,
+  getFavBooksAfterRemoving: (state: RootState) => state.books.favBooksList,
 };

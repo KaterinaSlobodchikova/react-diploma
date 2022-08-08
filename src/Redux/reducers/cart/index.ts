@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { BookModel } from "../../../Types/models/book.model";
+import { RootState } from "../../store";
 
 type InitialStateType = {
   cartItems: any[];
@@ -13,28 +15,52 @@ const initialState: InitialStateType = {
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: "bookCart",
   initialState,
   reducers: {
-    addToCart: (state: any, action: any) => {
-      state.cartTotalQuantity += 1;
-      state.cartItems.push(action.payload);
-      state.cartTotalAmount +=
-        action.payload.price * action.payload.cartTotalQuantity;
+    setCartBooks: (state: any, action: any) => {
+      const existingBook = state.cartItems.findIndex(
+        (book: BookModel) => book.isbn13 === action.payload.isbn13
+      );
+      if (existingBook >= 0) {
+        state.cartItems[existingBook] = {
+          ...state.cartItems[existingBook],
+          cartQuantity: state.cartItems[existingBook].cartQuantity + 1,
+        };
+      } else {
+        state.cartItems.push(action.payload);
+      }
     },
-    removeFromCart: (state: any, action: any) => {
-      let index = state.cartItems.indexOf(action.payload);
-      state.cartTotalQuantity -= action.payload;
+    removeBook: (state: any, action: any) => {
+      const index = state.cartItems.findIndex(
+        (book: BookModel) => book.isbn13 === action.payload
+      );
       state.cartItems.splice(index, 1);
-      state.cartItems = [...state.cartItems];
+    },
+    decreaseCart: (state: any, action: any) => {
+      const bookIndex = state.cartItems.findIndex(
+        (book: BookModel) => book.isbn13 === action.payload.isbn13
+      );
+      if (state.cartItems[bookIndex].cartQuantity > 1) {
+        state.cartItems[bookIndex].cartQuantity -= 1;
+      } else if (state.cartItems[bookIndex].cartQuantity === 1) {
+        const index = state.cartItems.findIndex(
+          (book: BookModel) => book.isbn13 === action.payload
+        );
+        state.cartItems.splice(index, 1);
+      }
     },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { setCartBooks, removeBook, decreaseCart } = cartSlice.actions;
 
 const reducer = cartSlice.reducer;
 
 export default reducer;
 
-export const CartSelectors = {};
+export const CartSelectors = {
+  getCartBooks: (state: RootState) => state.cartReducer.cartItems,
+  getCartBooksWithoutRemovedBook: (state: RootState) =>
+    state.cartReducer.cartItems,
+};

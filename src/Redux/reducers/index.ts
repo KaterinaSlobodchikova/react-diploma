@@ -1,11 +1,11 @@
-import { combineReducers } from "@reduxjs/toolkit";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
 
 import booksReducer from "./books";
 import cartReducer from "./cart";
 
 const rootReducer = combineReducers({
   books: booksReducer,
-  cart: cartReducer,
+  cartReducer,
 });
 
 export default rootReducer;

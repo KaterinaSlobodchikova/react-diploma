@@ -1,20 +1,63 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./CartPage.module.css";
 import IconButton from "../../Components/IconButton";
 import Title from "../../Components/Title";
-import { IconArrowLeft } from "../../Assets";
+import { IconArrowLeft, IconCancel, IconMinus, IconPlus } from "../../Assets";
 import Button from "../../Components/Button";
-import { BookModel } from "../../Types/models/book.model";
+import { useDispatch, useSelector } from "react-redux";
+import Divider from "../../Components/Divider";
+import {
+  CartSelectors,
+  removeBook,
+  decreaseCart,
+} from "../../Redux/reducers/cart";
 
 const CartPage: FC = () => {
-  const [cartItems, setCartItems] = useState<BookModel[]>([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
+  const cartBooksList = useSelector(CartSelectors.getCartBooks);
+
+  const sumTotal = cartBooksList.reduce(
+    (total, book) => total + +book.price.replace(/[^\d.-]/g, ""),
+    0
+  );
+  const vat = +(sumTotal * 0.18).toFixed(2);
+  const total = +(sumTotal + vat).toFixed(2);
+
+  {
+    /*const cartBooksElements = useMemo(() => {
+    return cartBooksList?.map((book: BookModel) => (
+      <div>
+        <div className={classNames(styles.bookFavHeartContainer)}>
+          <BookCard key={book.isbn13} book={book} />
+          <IconButton icon={FavHeart} onClick={() => {}} />
+        </div>
+        <div className={classNames(styles.dividerWrapper)}>
+          <Divider />
+        </div>
+      </div>
+    ));
+  }, [cartBooksList]);*/
+  }
 
   const onStepBackHandler = () => {
     navigate(-1);
+  };
+
+  const onCheckOutHandler = () => {
+    alert("Thank you for your order!");
+    navigate("/main");
+  };
+
+  const removeFromCart = (isbn13: string) => {
+    dispatch(removeBook(isbn13));
+  };
+
+  const decreaseCart = (isbn13: string) => {
+    dispatch(decreaseCart(isbn13));
   };
 
   return (
@@ -24,33 +67,74 @@ const CartPage: FC = () => {
         <Title text="YOUR CART" />
       </div>
       <div>
-        {cartItems.length === 0 ? (
-          <div>Your cart is empty.</div>
+        {cartBooksList.length === 0 ? (
+          <div className={classNames(styles.cartInfoWrapper)}>
+            Your Cart is empty.
+          </div>
         ) : (
-          <div>
-            {cartItems.map((book) => (
+          <div className={classNames(styles.cartInfoWrapper)}>
+            {cartBooksList.map((book) => (
               <div key={book.isbn13}>
-                <div>{book.image}</div>
-                <div>{book.title}</div>
-                <div>{book.authors}</div>
-                <div>{book.price}</div>
+                <div className={classNames(styles.bookInfoWrapper)}>
+                  <div className={classNames(styles.bookCardBackground)}>
+                    <img src={book.image} alt="book-preview" />
+                  </div>
+
+                  <div className={classNames(styles.bookIDescWrapper)}>
+                    <div className={classNames(styles.titleWrapper)}>
+                      <Link to={`/main/${book.isbn13}`}>{book.title}</Link>
+                    </div>
+                    <div className={classNames(styles.authorsWrapper)}>
+                      by {book.authors}
+                    </div>
+
+                    <div className={classNames(styles.qtyWrapper)}>
+                      <IconButton
+                        icon={IconMinus}
+                        onClick={() => decreaseCart(book.isbn13)}
+                      />
+                      <div>1</div>
+                      <IconButton icon={IconPlus} onClick={() => {}} />
+                    </div>
+                  </div>
+                  <div className={classNames(styles.priceWrapper)}>
+                    {book.price}
+                  </div>
+                  <IconButton
+                    icon={IconCancel}
+                    onClick={() => removeFromCart(book.isbn13)}
+                  />
+                </div>
+
+                <div className={classNames(styles.dividerWrapper)}>
+                  <Divider />
+                </div>
               </div>
             ))}
+            <div className={classNames(styles.totalContainer)}>
+              <div className={classNames(styles.totalWrapper)}>
+                <div className={classNames(styles.sumTotalWrapper)}>
+                  {" "}
+                  <p>Sum total</p> <div>$ {+sumTotal.toFixed(2)}</div>{" "}
+                </div>
+                <div className={classNames(styles.sumTotalWrapper)}>
+                  <p>VAT</p>
+                  <div>$ {vat}</div>
+                </div>
+                <div className={classNames(styles.cartTotalWrapper)}>
+                  <div>TOTAL: </div>
+                  <div>$ {total}</div>
+                </div>
+
+                <Button
+                  title="CHECK OUT"
+                  onClick={() => onCheckOutHandler()}
+                  className={classNames(styles.checkButton)}
+                />
+              </div>
+            </div>
           </div>
         )}
-      </div>
-
-      <div className={classNames(styles.totalContainer)}>
-        <div className={classNames(styles.totalWrapper)}>
-          <p>Sum total</p>
-          <p>VAT</p>
-          <h3>TOTAL:</h3>
-          <Button
-            title="CHECK OUT"
-            onClick={() => {}}
-            className={classNames(styles.checkButton)}
-          />
-        </div>
       </div>
     </div>
   );

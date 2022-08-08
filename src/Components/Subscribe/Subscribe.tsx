@@ -18,7 +18,10 @@ const Subscribe: FC = () => {
         </div>
         <div className={classNames(styles.emailWrapper)}>
           <Input type="text" onChange={onchange} placeholder="Your email" />
-          <Button title="SUBSCRIBE" onClick={() => {}} />
+          <Button
+            title="SUBSCRIBE"
+            onClick={() => alert("You are subscribed!")}
+          />
         </div>
       </div>
     </div>

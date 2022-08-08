@@ -17,11 +17,13 @@ const Authorization: FC = () => {
     else setCurrentTab("Sign in");
   };
 
-  useEffect(() => {
+  {
+    /*useEffect(() => {
     setTimeout(() => {
       setWelcomeTextShown(true);
     }, 2000);
-  }, []);
+  }, []);*/
+  }
 
   return (
     <div className={classNames(styles.authContainer)}>
@@ -46,11 +48,14 @@ const Authorization: FC = () => {
             <div className={classNames(styles.signInWrapper)}>
               <div className={classNames(styles.dividerLeft)}></div>
 
-              {welcomeTextShown && <div className={classNames(styles.welcomeTextWrapper)}>
-                <div className={classNames(styles.welcomeText)}>Your password has been changed!</div>
-                </div>}
+              {welcomeTextShown && (
+                <div className={classNames(styles.welcomeTextWrapper)}>
+                  <div className={classNames(styles.welcomeText)}>
+                    Your password has been changed!
+                  </div>
+                </div>
+              )}
               <div className={classNames(styles.contentWrapper)}>
-
                 <p>Email</p>
                 <Input
                   type="text"

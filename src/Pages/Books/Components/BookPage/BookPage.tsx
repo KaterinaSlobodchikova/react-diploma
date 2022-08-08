@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
@@ -25,12 +25,13 @@ import {
 import Button from "../../../../Components/Button";
 import IconButton from "../../../../Components/IconButton";
 import Divider from "../../../../Components/Divider";
-import { addToCart } from "../../../../Redux/reducers/cart";
 import { BookModel } from "../../../../Types/models/book.model";
 import BookCard from "../BookCard";
+import { setCartBooks } from "../../../../Redux/reducers/cart";
 
 const BookPage: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const book = useSelector(BooksSelectors.getSelectedBook);
   const booksList = useSelector(BooksSelectors.getBooks);
   const { bookId } = useParams<{ bookId: string }>();
@@ -44,11 +45,12 @@ const BookPage: FC = () => {
   }, []);
 
   const addToCartHandler = (book: BookModel) => {
-    dispatch(addToCart(book));
+    dispatch(setCartBooks(book));
   };
 
   const addToFavHandler = (book: BookModel) => {
     dispatch(setFavBooks(book));
+    alert("Added to Favorites!");
   };
 
   const similarBooksElements = useMemo(() => {
@@ -57,9 +59,13 @@ const BookPage: FC = () => {
       .map((book: BookModel) => <BookCard key={book.isbn13} book={book} />);
   }, [booksList]);
 
+  const onStepBackHandler = () => {
+    navigate(-1);
+  };
+
   return (
     <div className={classNames(styles.bookPageContainer)}>
-      <IconButton icon={IconArrowLeft} onClick={() => {}} />
+      <IconButton icon={IconArrowLeft} onClick={onStepBackHandler} />
       <Title text={book?.title ?? ""} />
       <div className={classNames(styles.bookInfoContainer)}>
         <div className={classNames(styles.bookImageContainer)}>
@@ -111,7 +117,9 @@ const BookPage: FC = () => {
             onClick={() => addToCartHandler(book!)}
             className={classNames(styles.buttonWrapper)}
           />
-          <p>Preview book</p>
+          <div>
+            <p>Preview book</p>
+          </div>
         </div>
       </div>
 
