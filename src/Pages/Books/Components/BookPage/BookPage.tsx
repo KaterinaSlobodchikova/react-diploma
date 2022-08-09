@@ -117,8 +117,10 @@ const BookPage: FC = () => {
             onClick={() => addToCartHandler(book!)}
             className={classNames(styles.buttonWrapper)}
           />
-          <div>
-            <p>Preview book</p>
+          <div className={classNames(styles.previewWrapper)}>
+            <a href={book?.url} target="_blank">
+              Preview book
+            </a>
           </div>
         </div>
       </div>

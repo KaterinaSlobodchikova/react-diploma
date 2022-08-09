@@ -19,16 +19,13 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCartBooks: (state: any, action: any) => {
-      const existingBook = state.cartItems.findIndex(
+      const bookInCart = state.cartItems.find(
         (book: BookModel) => book.isbn13 === action.payload.isbn13
       );
-      if (existingBook >= 0) {
-        state.cartItems[existingBook] = {
-          ...state.cartItems[existingBook],
-          cartQuantity: state.cartItems[existingBook].cartQuantity + 1,
-        };
+      if (bookInCart) {
+        bookInCart.quantity++;
       } else {
-        state.cartItems.push(action.payload);
+        state.cartItems.push({ ...action.payload, quantity: 1 });
       }
     },
     removeBook: (state: any, action: any) => {
@@ -38,22 +35,26 @@ const cartSlice = createSlice({
       state.cartItems.splice(index, 1);
     },
     decreaseCart: (state: any, action: any) => {
-      const bookIndex = state.cartItems.findIndex(
-        (book: BookModel) => book.isbn13 === action.payload.isbn13
+      const book = state.cartItems.find(
+        (book: BookModel) => book.isbn13 === action.payload
       );
-      if (state.cartItems[bookIndex].cartQuantity > 1) {
-        state.cartItems[bookIndex].cartQuantity -= 1;
-      } else if (state.cartItems[bookIndex].cartQuantity === 1) {
-        const index = state.cartItems.findIndex(
-          (book: BookModel) => book.isbn13 === action.payload
-        );
-        state.cartItems.splice(index, 1);
+      if (book.quantity === 1) {
+        book.quantity = 1;
+      } else {
+        book.quantity--;
       }
+    },
+    increaseCart: (state: any, action: any) => {
+      const book = state.cartItems.find(
+        (book: BookModel) => book.isbn13 === action.payload
+      );
+      book.quantity++;
     },
   },
 });
 
-export const { setCartBooks, removeBook, decreaseCart } = cartSlice.actions;
+export const { setCartBooks, removeBook, decreaseCart, increaseCart } =
+  cartSlice.actions;
 
 const reducer = cartSlice.reducer;
 

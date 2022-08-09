@@ -23,7 +23,7 @@ const ResetPassword: FC = () => {
   };
 
   const homePageHandler = () => {
-    navigate("/");
+    navigate("/main");
   };
 
   return (

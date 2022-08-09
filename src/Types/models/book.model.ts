@@ -15,6 +15,7 @@ export type BookModel = {
   url: string;
   pdf: PdfModel;
   favorite: boolean;
+  quantity: number;
 };
 
 export type PdfModel = {

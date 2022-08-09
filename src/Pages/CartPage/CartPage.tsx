@@ -13,15 +13,18 @@ import {
   CartSelectors,
   removeBook,
   decreaseCart,
+  increaseCart,
 } from "../../Redux/reducers/cart";
+import { BookModel } from "../../Types/models/book.model";
 
 const CartPage: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const cartBooksList = useSelector(CartSelectors.getCartBooks);
+  //const cartItems = useSelector((state) => state.cart);
 
   const sumTotal = cartBooksList.reduce(
-    (total, book) => total + +book.price.replace(/[^\d.-]/g, ""),
+    (total, book) => total + +book.price.replace(/[^\d.-]/g, "") * book.quantity,
     0
   );
   const vat = +(sumTotal * 0.18).toFixed(2);
@@ -56,10 +59,6 @@ const CartPage: FC = () => {
     dispatch(removeBook(isbn13));
   };
 
-  const decreaseCart = (isbn13: string) => {
-    dispatch(decreaseCart(isbn13));
-  };
-
   return (
     <div className={classNames(styles.cartContainer)}>
       <div className={classNames(styles.cartWrapper)}>
@@ -91,14 +90,17 @@ const CartPage: FC = () => {
                     <div className={classNames(styles.qtyWrapper)}>
                       <IconButton
                         icon={IconMinus}
-                        onClick={() => decreaseCart(book.isbn13)}
+                        onClick={() => dispatch(decreaseCart(book.isbn13))}
                       />
-                      <div>1</div>
-                      <IconButton icon={IconPlus} onClick={() => {}} />
+                      <div>{book.quantity}</div>
+                      <IconButton
+                        icon={IconPlus}
+                        onClick={() => dispatch(increaseCart(book.isbn13))}
+                      />
                     </div>
                   </div>
                   <div className={classNames(styles.priceWrapper)}>
-                    {book.price}
+                    ${+book.price.replace(/[^\d.-]/g, "") * book.quantity}
                   </div>
                   <IconButton
                     icon={IconCancel}

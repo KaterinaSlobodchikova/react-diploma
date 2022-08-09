@@ -10,7 +10,6 @@ import {
   SearchIcon,
   CartIconActive,
   FavIconActive,
-  LoginIcon,
 } from "../../Assets";
 import IconButton from "../IconButton";
 import Divider from "../Divider";
@@ -43,10 +42,6 @@ const Header: FC = () => {
     navigate("/account-info");
   };
 
-  const loginHandler = () => {
-    navigate("/authorization");
-  };
-
   return (
     <div className={classNames(styles.headerWrapper)}>
       <div className={classNames(styles.contentWrapper)}>
@@ -66,7 +61,6 @@ const Header: FC = () => {
           )}
 
           <IconButton icon={UserIcon} onClick={accountHandler} />
-          <IconButton icon={LoginIcon} onClick={loginHandler} />
         </div>
       </div>
       <Divider />

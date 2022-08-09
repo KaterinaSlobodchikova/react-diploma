@@ -8,9 +8,11 @@ import Subscribe from "../../Components/Subscribe";
 import Title from "../../Components/Title";
 import { BookModel } from "../../Types/models/book.model";
 import BookCard from "./Components/BookCard";
+import Spinner from "./Components/Spinner";
 
 const Books: FC = () => {
   const booksList = useSelector(BooksSelectors.getBooks);
+  const isAllBooksLoading = useSelector(BooksSelectors.getBooksLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const Books: FC = () => {
       <Title text="NEW RELEASES BOOKS" />
       <div className={classNames(styles.booksWrapper)}>{allBooksElements}</div>
       <Subscribe />
+      {isAllBooksLoading && <Spinner />}
     </div>
   );
 };

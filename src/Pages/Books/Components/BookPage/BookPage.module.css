@@ -9,6 +9,7 @@
 .bookInfoContainer {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 72px;
 }
 
 .bookBackground {
@@ -92,4 +93,9 @@
 
 h2 {
   margin-bottom: 50px;
+}
+
+.previewWrapper {
+  display: flex;
+  justify-content: center;
 }

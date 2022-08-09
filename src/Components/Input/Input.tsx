@@ -23,6 +23,7 @@ const Input: FC<InputProps> = ({
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
+  
   return (
     <input
       ref={ref}
