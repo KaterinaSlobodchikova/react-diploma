@@ -15,13 +15,11 @@ import {
   decreaseCart,
   increaseCart,
 } from "../../Redux/reducers/cart";
-import { BookModel } from "../../Types/models/book.model";
 
 const CartPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartBooksList = useSelector(CartSelectors.getCartBooks);
-  //const cartItems = useSelector((state) => state.cart);
 
   const sumTotal = cartBooksList.reduce(
     (total, book) => total + +book.price.replace(/[^\d.-]/g, "") * book.quantity,
@@ -29,22 +27,6 @@ const CartPage: FC = () => {
   );
   const vat = +(sumTotal * 0.18).toFixed(2);
   const total = +(sumTotal + vat).toFixed(2);
-
-  {
-    /*const cartBooksElements = useMemo(() => {
-    return cartBooksList?.map((book: BookModel) => (
-      <div>
-        <div className={classNames(styles.bookFavHeartContainer)}>
-          <BookCard key={book.isbn13} book={book} />
-          <IconButton icon={FavHeart} onClick={() => {}} />
-        </div>
-        <div className={classNames(styles.dividerWrapper)}>
-          <Divider />
-        </div>
-      </div>
-    ));
-  }, [cartBooksList]);*/
-  }
 
   const onStepBackHandler = () => {
     navigate(-1);
@@ -67,7 +49,7 @@ const CartPage: FC = () => {
       </div>
       <div>
         {cartBooksList.length === 0 ? (
-          <div className={classNames(styles.cartInfoWrapper)}>
+          <div className={classNames(styles.noCartInfoWrapper)}>
             Your Cart is empty.
           </div>
         ) : (

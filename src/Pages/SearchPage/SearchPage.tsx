@@ -34,9 +34,13 @@ const SearchPage: FC = () => {
       </div>
       <Title text={query ? `'${query}' SEARCH RESULTS` : "SEARCH"} />
       <div className={classNames(styles.searchWrapper)}>
-        {searchBooksElements.length !== 0
-          ? searchBooksElements
-          : `Your search - '${query}' - did not match any book. Please, try again.`}
+        {searchBooksElements.length !== 0 ? (
+          searchBooksElements
+        ) : (
+          <div className={classNames(styles.noResultsWrapper)}>
+            Your search - {query} - did not match any book. Please, try again.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,6 +9,13 @@
 
 .cartInfoWrapper {
   min-height: 70vh;
+  font-family: Roboto, sans-serif;
+}
+
+.noCartInfoWrapper {
+  min-height: 70vh;
+  font-family: Roboto, sans-serif;
+  color: #a8a8a8;
 }
 
 .cartWrapper {

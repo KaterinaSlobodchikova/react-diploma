@@ -28,3 +28,8 @@ input {
   display: flex;
   justify-content: center;
 }
+
+.noResultsWrapper {
+  font-family: Roboto, sans-serif;
+  color: #a8a8a8;
+}

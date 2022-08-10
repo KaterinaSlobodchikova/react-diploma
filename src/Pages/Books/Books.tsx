@@ -17,6 +17,7 @@ const Books: FC = () => {
 
   useEffect(() => {
     dispatch(getBooks());
+    window.scrollTo(0, 0);
   }, []);
 
   const allBooksElements = useMemo(() => {

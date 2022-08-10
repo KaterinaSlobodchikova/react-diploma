@@ -6,8 +6,8 @@ import styles from "./Input.module.css";
 type InputProps = {
   ref?: ForwardedRef<HTMLInputElement>;
   type: string;
-  value?: string;
-  onChange: any;
+  value?: string | number;
+  onChange?: any;
   placeholder?: string;
   onKeyDown?: any;
 };
@@ -20,16 +20,16 @@ const Input: FC<InputProps> = ({
   placeholder,
   onKeyDown,
 }) => {
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
-  
+  //const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //  onChange(event.target.value);
+  //};
+
   return (
     <input
       ref={ref}
       type={type}
       value={value}
-      onChange={onInputChange}
+      onChange={onChange}
       className={classNames(styles.input)}
       placeholder={placeholder}
       onKeyDown={onKeyDown}

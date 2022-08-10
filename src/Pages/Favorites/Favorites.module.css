@@ -29,7 +29,8 @@
   width: 1120px;
   min-height: 50vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  font-family: Roboto, sans-serif;
 }
 
 .secondTitleContainer,

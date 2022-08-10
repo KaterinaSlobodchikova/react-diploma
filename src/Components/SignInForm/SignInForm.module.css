@@ -1,0 +1,15 @@
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+  padding-left: 32px;
+}
+
+.authButton {
+  margin-top: 40px;
+  width: 480px;
+}
+
+.forgotPassWrapper {
+  padding-top: 8px;
+}

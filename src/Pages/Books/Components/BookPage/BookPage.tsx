@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from "react";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
@@ -38,10 +38,12 @@ const BookPage: FC = () => {
 
   useEffect(() => {
     dispatch(setSelectedBook(bookId));
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
     dispatch(getBooks());
+    window.scrollTo(0, 0);
   }, []);
 
   const addToCartHandler = (book: BookModel) => {
