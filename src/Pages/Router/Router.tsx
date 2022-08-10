@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Books from "../Books";

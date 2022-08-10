@@ -38,7 +38,8 @@ const SearchPage: FC = () => {
           searchBooksElements
         ) : (
           <div className={classNames(styles.noResultsWrapper)}>
-            Your search - {query} - did not match any book. Please, try again.
+            Your search - <strong>{query}</strong> - did not match any book.
+            Please, try again.
           </div>
         )}
       </div>

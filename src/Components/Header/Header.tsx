@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import classNames from "classnames";
 
 import {
@@ -10,14 +11,17 @@ import {
   SearchIcon,
   CartIconActive,
   FavIconActive,
+  LoginIcon,
 } from "../../Assets";
 import IconButton from "../IconButton";
 import Divider from "../Divider";
 
 import styles from "./Header.module.css";
+import { removeUser } from "../../Redux/reducers/user";
 
 const Header: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const isCartPage = location.pathname === "/cart";
   const isFavPage = location.pathname === "/favorites";
@@ -42,6 +46,10 @@ const Header: FC = () => {
     navigate("/account-info");
   };
 
+  const logOutHandler = () => {
+    dispatch(removeUser());
+  };
+
   return (
     <div className={classNames(styles.headerWrapper)}>
       <div className={classNames(styles.contentWrapper)}>
@@ -61,6 +69,7 @@ const Header: FC = () => {
           )}
 
           <IconButton icon={UserIcon} onClick={accountHandler} />
+          <IconButton icon={LoginIcon} onClick={logOutHandler} />
         </div>
       </div>
       <Divider />
