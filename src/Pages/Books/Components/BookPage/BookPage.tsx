@@ -13,6 +13,7 @@ import {
 import Title from "../../../../Components/Title";
 import Subscribe from "../../../../Components/Subscribe";
 import {
+  AddedToFavHeart,
   FBIcon,
   Heart,
   IconArrowLeft,
@@ -27,14 +28,24 @@ import IconButton from "../../../../Components/IconButton";
 import Divider from "../../../../Components/Divider";
 import { BookModel } from "../../../../Types/models/book.model";
 import BookCard from "../BookCard";
-import { setCartBooks } from "../../../../Redux/reducers/cart";
+import { CartSelectors, setCartBooks } from "../../../../Redux/reducers/cart";
 
 const BookPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const book = useSelector(BooksSelectors.getSelectedBook);
   const booksList = useSelector(BooksSelectors.getBooks);
+  const favBooksList = useSelector(BooksSelectors.getFavBooks);
+  const cartBooksList = useSelector(CartSelectors.getCartBooks);
   const { bookId } = useParams<{ bookId: string }>();
+
+  const isBookFav = !!favBooksList.find(
+    (bookInfo: BookModel) => bookInfo.isbn13 === book!.isbn13
+  );
+
+  const isBookAtCart = !!cartBooksList.find(
+    (bookInfo: BookModel) => bookInfo.isbn13 === book!.isbn13
+  );
 
   useEffect(() => {
     dispatch(setSelectedBook(bookId));
@@ -52,7 +63,6 @@ const BookPage: FC = () => {
 
   const addToFavHandler = (book: BookModel) => {
     dispatch(setFavBooks(book));
-    alert("Added to Favorites!");
   };
 
   const similarBooksElements = useMemo(() => {
@@ -75,7 +85,7 @@ const BookPage: FC = () => {
             <img src={book?.image} alt="book-preview" />
             <div>
               <IconButton
-                icon={Heart}
+                icon={isBookFav ? AddedToFavHeart : Heart}
                 onClick={() => {
                   addToFavHandler(book!);
                 }}
@@ -114,11 +124,20 @@ const BookPage: FC = () => {
             <p>Paper book / ebook (PDF)</p>
           </div>
           <p>More details...</p>
-          <Button
-            title="ADD TO CART"
-            onClick={() => addToCartHandler(book!)}
-            className={classNames(styles.buttonWrapper)}
-          />
+          {isBookAtCart ? (
+            <Button
+              title="ADDED TO CART"
+              onClick={() => alert("This book is already in your cart!")}
+              className={classNames(styles.buttonWrapper)}
+            />
+          ) : (
+            <Button
+              title="ADD TO CART"
+              onClick={() => addToCartHandler(book!)}
+              className={classNames(styles.buttonWrapper)}
+            />
+          )}
+
           <div className={classNames(styles.previewWrapper)}>
             <a href={book?.url} target="_blank">
               Preview book

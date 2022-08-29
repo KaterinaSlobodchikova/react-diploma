@@ -82,7 +82,7 @@ const CartPage: FC = () => {
                     </div>
                   </div>
                   <div className={classNames(styles.priceWrapper)}>
-                    ${(+book.price.replace(/[^\d.-]/g, "") * book.quantity).toFixed(2)}
+                    ${(+book.price.replace(/[^\d.-]/g, "")).toFixed(2)}
                   </div>
                   <IconButton
                     icon={IconCancel}

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,7 @@ const Favorites: FC = () => {
   }, []);
 
   const removeFromFav = (isbn13: string) => {
-    dispatch(removeFromFavs(isbn13))
+    dispatch(removeFromFavs(isbn13));
   };
 
   const favBooksElements = useMemo(() => {

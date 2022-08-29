@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
 import {
@@ -15,16 +15,19 @@ import {
 } from "../../Assets";
 import IconButton from "../IconButton";
 import Divider from "../Divider";
-
 import styles from "./Header.module.css";
 import { removeUser } from "../../Redux/reducers/user";
+import { BooksSelectors } from "../../Redux/reducers/books";
+import { CartSelectors } from "../../Redux/reducers/cart";
 
 const Header: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const isCartPage = location.pathname === "/cart";
-  const isFavPage = location.pathname === "/favorites";
+
+  const favBooksList = useSelector(BooksSelectors.getFavBooks);
+  const cartBooksList = useSelector(CartSelectors.getCartBooks);
+  const isFavListExist = favBooksList.length !== 0;
+  const isCartListExist = cartBooksList.length !== 0;
 
   const homePageHandler = () => {
     navigate("/main");
@@ -56,13 +59,13 @@ const Header: FC = () => {
         <IconButton icon={BookstoreLogo} onClick={homePageHandler} />
         <div className={classNames(styles.iconsWrapper)}>
           <IconButton icon={SearchIcon} onClick={searchHandler} />
-          {isFavPage ? (
+          {isFavListExist ? (
             <IconButton icon={FavIconActive} onClick={favoritesHandler} />
           ) : (
             <IconButton icon={FavIcon} onClick={favoritesHandler} />
           )}
 
-          {isCartPage ? (
+          {isCartListExist ? (
             <IconButton icon={CartIconActive} onClick={cartPageHandler} />
           ) : (
             <IconButton icon={CartIcon} onClick={cartPageHandler} />

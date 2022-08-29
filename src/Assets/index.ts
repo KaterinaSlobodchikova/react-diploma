@@ -3,6 +3,7 @@ import SearchIcon from "./icons/Icon-Search.svg";
 import FavIcon from "./icons/fav.svg";
 import FavIconActive from "./icons/fav-active.svg";
 import FavHeart from "./icons/fav-heart.svg";
+import AddedToFavHeart from "./icons/addedToFav.svg";
 import CartIcon from "./icons/shopping-bag.svg";
 import CartIconActive from "./icons/shopping-bag-active.svg";
 import UserIcon from "./icons/user.svg";
@@ -27,6 +28,7 @@ export {
   FavIcon,
   FavIconActive,
   FavHeart,
+  AddedToFavHeart,
   CartIcon,
   CartIconActive,
   UserIcon,

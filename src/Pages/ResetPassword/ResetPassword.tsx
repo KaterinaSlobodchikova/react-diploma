@@ -45,7 +45,7 @@ const ResetPassword: FC = () => {
         <Input
           type="text"
           value={email}
-          onChange={emailHandler}
+          onChange={(event: any) => emailHandler(event.target.value)}
           placeholder="Your email"
         />
 
